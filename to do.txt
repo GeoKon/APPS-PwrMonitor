@@ -1,0 +1,17 @@
+1. [DONE] In addition to Vmin-Vmax include also current reading
+2. [DONE] OLED brightness. Always show OLED. 'display' options for Meguno
+3. [DONE] OLED to show S or Ph#1 Ph#2. 
+3b [DONE] OLED To show kWh
+4. Graph shows watts instead of kW
+5. Why kWh is negative?  FIX the SCALE in mySupport.cpp
+6. CLI to reset stats any time
+7. [DONE] kHw dial is meaningless! Add RESET kWh button in Thinger
+
+8. Dec2019: add archiving to a file of all ALARMS
+9. Dec2019: test operation without WiFi connection
+
+h/w
+1. [DONE] add isolation when booting
+2. [DONE] add two phases
+3. Dec2019: Add battery backup
+
