@@ -171,18 +171,18 @@
         Wsum = 0.0;
         count = 0;
     }
-    const char *VWSTATS::getVStats()
-    {
-        static char temp[32];
-        return (const char *) sf( temp, sizeof( temp ), 
-            "avg:%.1fV, min:%.1fV", stat.Vavg, stat.Vmin);
-    }
-    const char *VWSTATS::getWStats()
-    {
-        static char temp[32];
-        return (const char *) sf( temp, sizeof( temp ), 
-            "avg:%.2fkW, max:%.2fkW", stat.Wavg/1000.0, stat.Wmax/1000.0 );
-    }
+//    const char *VWSTATS::getVStats()
+//    {
+//        static char temp[32];
+//        return (const char *) sf( temp, sizeof( temp ), 
+//            "avg:%.1fV, min:%.1fV", stat.Vavg, stat.Vmin);
+//    }
+//    const char *VWSTATS::getWStats()
+//    {
+//        static char temp[32];
+//        return (const char *) sf( temp, sizeof( temp ), 
+//            "avg:%.2fkW, max:%.2fkW", stat.Wavg/1000.0, stat.Wmax/1000.0 );
+//    }
 // --------------------------------- ALARMS ----------------------------
 
     ALARM::ALARM()

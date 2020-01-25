@@ -74,8 +74,8 @@
         VWSTATS();
         void updateStats( VAP *n );         // call periodically
         STATS getStats();                   // get current stats
-        const char *getVStats();            // get stats string
-        const char *getWStats();            // get stats string
+//        const char *getVStats();            // get stats string
+//        const char *getWStats();            // get stats string
         void resetStats();
     };
 

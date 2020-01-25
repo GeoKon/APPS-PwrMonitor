@@ -65,7 +65,8 @@
     
     static char exrsp[1500];        // Buffer used for Thinger CLI. Must be static
     BUF exbuf( exrsp, 1500 );       // BUF wrapper of exstr[] 
-    
+    static STATS stShortT;          // crated by Thinker used by the Dropbox
+    static STATS stLongT; 
 
     void setupThinger()
     {
@@ -259,27 +260,27 @@
  * and store respective stats in tables. The main loop uses 'ticS.ready()' and 'ticL.ready()' which trigger 
  * every hour and every day respectively to reset the statistics
  * -------------------------------------------------------------------------------------------------------------- */
+
         thing["MinuteStats"] >> [](pson& ot )       // Buckets (15min or Hourly) in POLLING MODE. Use short term averages
         {
-            static STATS st;                        // must be static!
-            st = shortT.getStats();                 // get short term stats
-            ot["1:Vmin"]      = st.Vmin;
-            ot["2:Vavg"]      = st.Vavg;
-            ot["3:Wavg"]      = st.Wavg/1000.0;
-            ot["4:Wmax"]      = st.Wmax/1000.0;
-            ot["5:kWh" ]      = st.kWh;
+            
+            stShortT = shortT.getStats();                 // get short term stats
+            ot["1:Vmin"]      = stShortT.Vmin;
+            ot["2:Vavg"]      = stShortT.Vavg;
+            ot["3:Wavg"]      = stShortT.Wavg/1000.0;
+            ot["4:Wmax"]      = stShortT.Wmax/1000.0;
+            ot["5:kWh" ]      = stShortT.kWh;
             shortT.resetStats();
             PFN("ShortT stats reset at %s by Thinger", tmb.getTime() );
         };
         thing["HourlyStats"] >> [](pson& ot )       // Buckets (15min or Hourly) in POLLING MODE. Use short term averages
         {
-            static STATS st;                        // must be static!
-            st = longT.getStats();                  // get long term stats
-            ot["1:Vmin"]      = st.Vmin;
-            ot["2:Vavg"]      = st.Vavg;
-            ot["3:Wavg"]      = st.Wavg/1000.0;
-            ot["4:Wmax"]      = st.Wmax/1000.0;
-            ot["5:kWh" ]      = st.kWh;
+            stLongT = longT.getStats();                  // get long term stats
+            ot["1:Vmin"]      = stLongT.Vmin;
+            ot["2:Vavg"]      = stLongT.Vavg;
+            ot["3:Wavg"]      = stLongT.Wavg/1000.0;
+            ot["4:Wmax"]      = stLongT.Wmax/1000.0;
+            ot["5:kWh" ]      = stLongT.kWh;
             longT.resetStats();
             PFN("LontT stats reset at %s by Thinger", tmb.getTime() );
         };
@@ -403,14 +404,15 @@ void alarmViaIFTTT()
 
 void sendToDropbox( ) 
 {
-    ntfy.append();              // Advance to next free slot of ntfy buffer
-    ntfy.set( "I=(%.1fA, %.1fA), P=%.2fkW, E=%.1fkWh, M=(%s) H=(%s)",
+    ntfy.append();              							// Advance to next free slot of ntfy buffer
+    
+    ntfy.set( "I=(%.1fA, %.1fA), P=%.2fkW, E=%.1fkWh, Mn=(avg:%.2fkW, max:%.2fkW), Hr=(avg:%.2fkW, max:%.2fkW)",
         myp.vap[1].amps,
         myp.vap[2].amps,
         myp.vap[0].watts/1000.0,
         myp.vap[0].kWh,
-        shortT.getWStats(),
-        longT.getWStats() );
+        stShortT.Wavg/1000.0, stShortT.Wmax/1000.0, 
+        stLongT.Wavg/1000.0, stLongT.Wmax/1000.0 );											// use the previous buffers
         
     PF("DROPBOX: %s\r\n", ntfy.c_str() );
         

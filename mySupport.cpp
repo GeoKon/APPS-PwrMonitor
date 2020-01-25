@@ -39,10 +39,12 @@ void reportVAP( int mask )                      // reports whatever the current 
                     myp.vap[myp.phase].watts, 
                     myp.vap[myp.phase].kWh );
         
-        PF( ", %s, %s, %s\r\n", 
-            shortT.getVStats(), 
-            shortT.getWStats(),
-            alm.getAlarms());
+//        PF( ", %s, %s, %s\r\n", 
+//            shortT.getVStats(), 
+//            shortT.getWStats(),
+//            alm.getAlarms());
+
+        PF( ", %s\r\n", alm.getAlarms());
     }
     if( mask & STREAM_MEGUNO )
     {
