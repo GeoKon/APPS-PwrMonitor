@@ -1,5 +1,3 @@
-
-
 # Power Monitor System
 
 ​																							Designed by: George Kontopidis, Dec 2019
@@ -407,3 +405,17 @@ The reporting handler **sendToDropbox()** works as follows:
 1. Constructs a pson object consisting of the text to be saved.
 2. Invokes the Thinger.io Endpoint "IFTTT_Dropbox". This Endpoint if of the **type "HTTP Webhook Trigger"** of the Applet "PZEM STAT".
 3. IFTTT constructs a message using the ingredients Value1, Value2, Value3, as follows: "PZEM, {{OccurredAt}}, {{Value1}}{{Value2}}{{Value3}}". Then, appends this to Dropbox file **PZEM_STAT.TXT**
+
+## 5. The Hardware
+
+| Installation of sensors to the Electrical Panel | Connection of Power Monitoring System |
+| ----------------------------------------------- | ------------------------------------- |
+| ![PwrMonitorHW1](PwrMonitorHW1.jpg)             | ![PwrMonitorHW3](PwrMonitorHW3.jpg)   |
+
+Detailed view of the microcontroller prototype
+
+![PwrMonitorHW2](PwrMonitorHW2.jpg)
+
+Wiring Diagram of the microcontroller
+
+![PwrMonitorWiring](PwrMonitorWiring.jpg)
